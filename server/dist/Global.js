@@ -31,6 +31,16 @@ class Global {
     getSpi() {
         return this.spi;
     }
+    setAvg(arr) {
+        let divident = 0;
+        for (const i in arr) {
+            divident += arr[i];
+        }
+        const divisor = arr.length;
+        const quotient = divident / divisor;
+        // const remainder = divident % divisor; use Later I guess
+        return quotient.toFixed(2);
+    }
 }
 export default Global;
 //# sourceMappingURL=Global.js.map

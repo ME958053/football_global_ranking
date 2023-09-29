@@ -3,7 +3,7 @@ import * as fs from 'fs';
 import * as http from 'http';
 import express from 'express';
 
-
+type isObject = Record<string | number | symbol, any>;
 //FILEPATHS
 const countriesRankingFilePath = '../data/spi_global_rankings_intl.json';
 const clubRankingFilePath = '../data/spi_global_rankings.json';
@@ -26,10 +26,10 @@ fs.readFile(countriesRankingFilePath, 'utf8', (err: any, data: any) => {
   try {
     // Parse the JSON data
     const countriesRanking = JSON.parse(data);
-    let country;
+    let country : isObject | null = null;
     // Now you can work with jsonData as a JavaScript object
     for (const i in countriesRanking) {
-        country = <Record<string | number | symbol, any>>new Global(
+        country = new Global(
         countriesRanking[i].rank,
         countriesRanking[i].name,
         countriesRanking[i].off,
@@ -43,8 +43,6 @@ fs.readFile(countriesRankingFilePath, 'utf8', (err: any, data: any) => {
 
     }
     
-
-
   } catch (jsonErr) {
     console.error('Error parsing JSON:', jsonErr);
   }
@@ -60,10 +58,10 @@ fs.readFile(clubRankingFilePath, 'utf8', (err: any, data: any) => {
   try {
     // Parse the JSON data
     const clubsRanking = JSON.parse(data);
-
+    let club : isObject;
     // Now you can work with jsonData as a JavaScript object
     for (const i in clubsRanking) {
-      let club = <Record<string | number | symbol, any>>new Global(
+        club = new Global(
         clubsRanking[i].rank,
         clubsRanking[i].name,
         clubsRanking[i].off,
@@ -75,9 +73,7 @@ fs.readFile(clubRankingFilePath, 'utf8', (err: any, data: any) => {
       clubsAvgDef.push(club.getDef());
       clubsAvgSpi.push(club.getSpi())
     }
-    console.log(avg(clubsAvgOff));
-    console.log(avg(clubsAvgDef));
-    console.log(avg(clubsAvgSpi));
+   
 
   } catch (jsonErr) {
     console.error('Error parsing JSON:', jsonErr);
